@@ -1,0 +1,41 @@
+<form (ngSubmit)="submitForm()" #m="ngForm">
+
+  <label for="username">Username</label><br>
+  <input type="text" name="username" ngModel id="username" ngModel required><br>
+  <div *ngIf="m.submitted && m.controls['username'].errors">
+    <div  *ngIf="m.controls['username'].errors['required']">username is required.</div>
+  </div>
+
+  <label for="email">Email</label><br>
+  <input type="email" name="email" ngModel id="email" ngModel required email><br>
+  <div *ngIf="m.submitted && m.controls['email'].errors">
+    <div  *ngIf="m.controls['email'].errors['required']">Email is required.</div>
+    <div  *ngIf="m.controls['email'].errors['email']">Email is not valid.</div>
+  </div>
+
+  <p>Programming Languages:</p>
+  <label *ngFor="let lang of programmingLanguages">
+    <input type="checkbox" name="languages" ngModel [value]="lang" ngModel required>{{ lang }}
+  </label>
+  <div *ngIf="m.submitted && !m.controls['languages'].value">Select at least one programming language.</div>
+
+  <p>Experience Level:</p>
+  <label *ngFor="let level of experienceLevels">
+    <input type="radio" name="experience" ngModel [value]="level" ngModel required>{{ level }}
+  </label>
+  <div *ngIf="m.submitted && !m.controls['experience'].value">Select an experience level.</div>
+
+  <label for="description">Project Description:</label><br>
+  <textarea name="description" ngModel required minlength="10"></textarea><br>
+  <div *ngIf="m.submitted && m.controls['description'].errors">
+    most be at least 10 charecters
+  </div>
+
+  <button type="submit" [disabled]="m.invalid">Submit</button>
+
+</form>
+
+<div *ngIf="submit">
+  <h3>Congratulations {{ m.value.username }}!</h3>
+  <p>Your programming skills are impressive. Keep up the great work!</p>
+</div>
